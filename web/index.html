@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="light dark">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>cubes-ASK // isometric cubes</title>
+<meta name="description" content="cubes-ASK // isometric cubes. Translucent cubes gather across the frame or around your pointer, in four ASK palettes. Choose the frame, then save the picture you keep as a PNG.">
+<link rel="canonical" href="https://cubes.a-s-k.studio/">
+<meta property="og:site_name" content="cubes-ASK">
+<meta property="og:title" content="cubes-ASK // isometric cubes">
+<meta property="og:description" content="Translucent cubes gather across the frame or around your pointer, in four ASK palettes. Choose the frame, then save the picture you keep as a PNG.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://cubes.a-s-k.studio/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Translucent isometric cubes in white and shades of purple, outlined in gray, on a pale lavender ground">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="cubes-ASK // isometric cubes">
+<meta name="twitter:description" content="Translucent cubes gather across the frame or around your pointer, in four ASK palettes. Choose the frame, then save the picture you keep as a PNG.">
+<meta name="twitter:image" content="https://cubes.a-s-k.studio/og-image.jpg">
+<meta name="twitter:image:alt" content="Translucent isometric cubes in white and shades of purple, outlined in gray, on a pale lavender ground">
+<!-- The ASK browser-icon package, vendored byte-identical (see VENDOR.md), in design-system-ASK's
+     deployed-origin form: root-absolute paths, with favicon.ico at the root for the browser's own probe. -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<!-- If a file the page needs does not load, say so at the top of the page instead of leaving it blank
+     or broken. It is registered before the stylesheets so that it hears their failures too. -->
+<script>
+(function () {
+  var failed = false;
+  function show() {
+    if (!failed || !document.body || document.getElementById('load-error')) return;
+    var p = document.createElement('p');
+    p.id = 'load-error';
+    p.className = 'inst-note';
+    p.setAttribute('role', 'alert');
+    p.textContent = 'A file this page needs did not load, so cubes-ASK may not work. Reload the page to try again.';
+    document.body.insertBefore(p, document.body.firstChild);
+  }
+  window.addEventListener('error', function (e) {
+    var t = e.target;
+    if (t && (t.tagName === 'SCRIPT' || (t.tagName === 'LINK' && /stylesheet/i.test(t.rel)))) { failed = true; show(); }
+  }, true);
+  document.addEventListener('DOMContentLoaded', show);
+})();
+</script>
+<!-- design-system-ASK, vendored byte-identical at one commit (see VENDOR.md): the foundation, the root
+     modules and the instrument pattern. Load order is the DS's own. The page carries no theme
+     attribute: the chrome follows the operating system through the foundation. -->
+<link rel="stylesheet" href="_dsa-tokens/colors_and_type.css">
+<link rel="stylesheet" href="_dsa-surface/surface-action.css">
+<link rel="stylesheet" href="_dsa-surface/surface-panel.css">
+<link rel="stylesheet" href="_dsa-surface/surface-treatments.css">
+<link rel="stylesheet" href="instrument.css">
+<!-- The cubes page's own small additions. -->
+<link rel="stylesheet" href="app/cubes.css">
+</head>
+<body>
+<noscript><p class="inst-note">cubes-ASK draws its cubes with JavaScript, which is turned off in this browser.</p></noscript>
+<div class="inst" id="inst" data-mode="field">
+
+  <header class="inst-head">
+    <p class="caption">cubes-ASK // isometric cubes</p>
+    <div class="inst-row">
+      <button type="button" class="surface-action surface-action--secondary" id="view-window">full window</button>
+      <button type="button" class="surface-action surface-action--secondary" id="view-fullscreen">fullscreen</button>
+    </div>
+  </header>
+
+  <!-- Stage and actions: two grid items side by side, one pinned block when the layout stacks. -->
+  <div class="inst-pin" id="pin">
+    <main class="inst-stage surface-material-panel surface-attach-free surface-elevation-flush" aria-label="artwork">
+      <div class="inst-fit" id="fit">
+        <canvas id="canvas" tabindex="0" role="img" aria-label="isometric cubes, generated artwork. Space pauses or plays."></canvas>
+      </div>
+    </main>
+
+    <div class="inst-bar">
+      <p class="inst-status" id="status"></p>
+      <p class="inst-sr" id="announce" role="status" aria-live="polite"></p>
+      <div class="inst-bar-actions">
+        <button type="button" class="surface-action" id="play">play</button>
+        <button type="button" class="surface-action surface-action--secondary inst-wide-only" id="clear">clear</button>
+        <button type="button" class="surface-action" id="save" aria-label="save PNG" aria-describedby="save-size"><span class="cubes-long">save PNG</span><span class="cubes-short">save</span></button>
+        <button type="button" class="surface-action surface-action--secondary inst-wide-only" id="undo" hidden>undo</button>
+        <span class="inst-bar-spacer" aria-hidden="true"></span>
+        <button type="button" class="surface-action surface-action--secondary inst-when-expanded inst-wide-only" id="view-fullscreen-bar">fullscreen</button>
+        <button type="button" class="surface-disclosure-trigger" id="panel-toggle" aria-label="controls" aria-controls="panel" aria-expanded="false" hidden>
+          <span class="surface-disclosure-label">controls</span>
+          <span class="surface-disclosure-indicator" aria-hidden="true">&#9660;</span>
+        </button>
+        <button type="button" class="surface-action surface-action--secondary" id="view-exit" hidden>exit</button>
+      </div>
+    </div>
+  </div>
+
+  <aside class="inst-panel surface-panel" id="panel" aria-label="controls">
+    <div class="inst-panel-body">
+      <h1 class="surface-panel-title">cubes-ASK</h1>
+
+      <div class="inst-col">
+        <fieldset class="inst-field" id="mode">
+          <legend class="caption">mode</legend>
+          <div class="inst-seg inst-seg--two">
+            <label><input type="radio" name="mode" value="field" checked><span>full field</span></label>
+            <label><input type="radio" name="mode" value="pointer"><span>around pointer</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="inst-field" id="palette">
+          <legend class="caption">colors</legend>
+          <div class="inst-seg inst-seg--two">
+            <label><input type="radio" name="palette" value="muted-purple" checked><span>muted purple</span></label>
+            <label><input type="radio" name="palette" value="ask-emphasis"><span>ASK emphasis</span></label>
+            <label><input type="radio" name="palette" value="rainbow"><span>rainbow</span></label>
+            <label><input type="radio" name="palette" value="red-pink-cyan"><span>red/pink/cyan</span></label>
+          </div>
+        </fieldset>
+
+        <div class="inst-field" id="base-field">
+          <label class="caption" for="base">muted purple base</label>
+          <div class="inst-row">
+            <input class="inst-range" id="base" type="range" min="0" max="100" step="1" value="100" aria-describedby="base-note">
+            <span class="inst-value" id="base-value" aria-hidden="true">100%</span>
+          </div>
+          <p class="inst-note" id="base-note"></p>
+        </div>
+      </div>
+
+      <div class="inst-col inst-col--second">
+        <fieldset class="inst-field" id="frame">
+          <legend class="caption">frame</legend>
+          <div class="inst-seg">
+            <label><input type="radio" name="frame" value="free" checked><span>free</span></label>
+            <label><input type="radio" name="frame" value="square"><span>square</span></label>
+            <label><input type="radio" name="frame" value="four-three"><span>4:3</span></label>
+            <label><input type="radio" name="frame" value="wide"><span>widescreen</span></label>
+          </div>
+          <p class="inst-note" id="save-size"></p>
+        </fieldset>
+
+        <hr class="inst-rule">
+
+        <button type="button" class="surface-disclosure-trigger" id="tuning-trigger" aria-expanded="false" aria-controls="tuning">
+          <span class="surface-disclosure-label">tuning</span>
+          <span class="surface-disclosure-indicator" aria-hidden="true">&#9660;</span>
+        </button>
+        <div class="inst-group" id="tuning" hidden>
+          <p class="inst-note">Each value affects new cubes only, except edge weight.</p>
+
+          <div class="inst-field">
+            <label class="caption" for="rate">rate</label>
+            <div class="inst-row">
+              <input class="inst-range" id="rate" type="range" min="1" max="240" step="1" value="60">
+              <span class="inst-value" id="rate-value" aria-hidden="true">60 /s</span>
+            </div>
+          </div>
+
+          <div class="inst-field" id="spread-field">
+            <label class="caption" for="spread">pointer spread</label>
+            <div class="inst-row">
+              <input class="inst-range" id="spread" type="range" min="0" max="8" step="1" value="3" aria-describedby="spread-note">
+              <span class="inst-value" id="spread-value" aria-hidden="true">&plusmn; 3</span>
+            </div>
+            <p class="inst-note" id="spread-note">How far from the pointer a new cube may land, in grid steps. Used in around pointer.</p>
+          </div>
+
+          <div class="inst-field">
+            <label class="caption" for="dark">darker purples</label>
+            <div class="inst-row">
+              <input class="inst-range" id="dark" type="range" min="0" max="20" step="1" value="5" aria-describedby="dark-note">
+              <span class="inst-value" id="dark-value" aria-hidden="true">5% each</span>
+            </div>
+            <p class="inst-note" id="dark-note"></p>
+          </div>
+
+          <div class="inst-field">
+            <label class="caption" for="solid">red + orange opacity</label>
+            <div class="inst-row">
+              <input class="inst-range" id="solid" type="range" min="70" max="93" step="1" value="82" aria-describedby="solid-note">
+              <span class="inst-value" id="solid-value" aria-hidden="true">82&ndash;94%</span>
+            </div>
+            <p class="inst-note" id="solid-note">Red and orange stay nearly opaque, so they read as red and orange. This sets the lowest opacity they may take, from 70% up; their highest is 94%. Every other color takes 38 to 87%.</p>
+          </div>
+
+          <div class="inst-field">
+            <label class="caption" for="edge">edge weight</label>
+            <div class="inst-row">
+              <input class="inst-range" id="edge" type="range" min="0" max="3" step="0.25" value="1" aria-describedby="edge-note">
+              <span class="inst-value" id="edge-value" aria-hidden="true">1 &times;</span>
+            </div>
+            <p class="inst-note" id="edge-note">1 &times; is a 1 px line on a picture 1080 px high. Changing it re-draws every cube.</p>
+          </div>
+
+          <div class="inst-row">
+            <button type="button" class="surface-action surface-action--secondary" id="values-reset">reset values</button>
+          </div>
+
+          <div class="inst-field">
+            <span class="caption" id="settings-label">settings</span>
+            <p class="inst-note inst-note--mono" id="settings-line" aria-labelledby="settings-label"></p>
+          </div>
+        </div>
+      </div>
+
+      <p class="inst-note inst-span">A picture holds up to 30,000 cubes. Then it is full and stays as it is: save it, or clear to start another. On a phone in full window, <span class="cubes-nowrap">clear</span> then takes the place of <span class="cubes-nowrap">play</span>, and for the 8 seconds a clear can be undone, <span class="cubes-nowrap">undo</span> shows beside <span class="cubes-nowrap">save</span>.</p>
+
+      <p class="inst-note inst-span" id="keys-note">On the canvas, space pauses or plays. Esc leaves full window.</p>
+
+      <p class="inst-note inst-span">cubes-ASK is part of <a href="https://a-s-k.studio/asymptotic-system-key">asymptotic system key</a> // <a href="https://github.com/apexSolarKiss/cubes-ASK">source on GitHub</a></p>
+    </div>
+  </aside>
+</div>
+
+<!-- Classic scripts, no modules. The colors are read from art-palettes.json with fetch, so the page
+     needs a server: opened from disk, it says that the colors did not load. -->
+<script src="app/cubes-engine.js"></script>
+<script src="instrument.js"></script>
+<script src="app/cubes-app.js"></script>
+</body>
+</html>

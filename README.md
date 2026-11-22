@@ -1,5 +1,19 @@
 ![isometric_cubes_v2 output](isometric_cubes_v2-2025-06-05-155633-00587.jpg)
 
+# cubes-ASK
+
+Formerly `isometric-cubes-ASK`. The repository was renamed in place on 2026-11-21, and its old GitHub address redirects here.
+
+---
+
+## Web instrument
+
+[`web/`](web/) holds cubes-ASK as a browser instrument: `full field` and `around pointer` in one instrument, in the four artwork palettes and on the instrument pattern of [design-system-ASK](https://github.com/apexSolarKiss/design-system-ASK), with full window, fullscreen, fixed frames and PNG saves at exact sizes. Serve the folder and open `index.html`; there is no build step.
+
+It keeps the sketches' lattice, cube sizes and cube geometry, and adds four palettes, an exact saved size for each frame, and a picture that is full at 30,000 cubes. See [`web/README.md`](web/README.md). The py5 sketches below stay as they are.
+
+---
+
 ## order from chaos
 
 In *The Signal and the Noise*, Nate Silver (statistician and forecaster), explores a fundamental problem in our data-saturated world: we’re overwhelmed with information, but struggle to discern what matters. We mistake noise (random fluctuations, distractions, false patterns) for signal (meaningful trends, real predictive insight). The more information we gather, the more confident we become — and yet, paradoxically, the less accurate our predictions. The tools of modern forecasting — whether in economics, politics, or climate — often create an illusion of control in domains inherently governed by uncertainty.
@@ -18,7 +32,7 @@ To live wisely in such a world is not to impose order, but to let order emerge f
 
 ---
 
-## isometric cubes ASK // py5
+## cubes-ASK // py5
 
 generative art sketches written in python/py5 >> randomly spawns grid-aligned isometric cubes in a muted purple ASK color palette
 
@@ -78,6 +92,8 @@ pip install --pre py5
 
 ## license
 
-Copyright 2022-2025 Andrew S Klug // ASK
+Copyright 2022-2026 Andrew S Klug // ASK
 
 Licensed under the Apache License 2.0 // see [`LICENSE`](LICENSE)
+
+`web/` also includes design-system-ASK files (Apache License 2.0) and the Inter and JetBrains Mono fonts (SIL Open Font License 1.1); see [`web/VENDOR.md`](web/VENDOR.md).
