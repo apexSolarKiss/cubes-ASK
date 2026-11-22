@@ -1,6 +1,6 @@
 # p5.js originals (provenance)
 
-These files preserve the original p5.js sketches that preceded the 2025 Python / py5 refactor. The active implementation is the Python / py5 version at the repo root; these sketches are kept as **provenance and lineage**, not as the current implementation.
+These files preserve the original p5.js sketches that preceded the 2025 Python / py5 refactor. The later implementations are the Python / py5 sketches at the repo root and the browser instrument in `web/`; these sketches are kept as **provenance and lineage**, not as a current implementation.
 
 - **full-random/** — predecessor to `isometric_cubes_v1.py`. Live p5 editor: https://editor.p5js.org/asymptoticSystemKey/sketches/bWa1wvK3r
 - **interactive-radius/** — predecessor to `isometric_cubes_v2.py` (cubes spawn in a radius around the cursor). Live p5 editor: https://editor.p5js.org/asymptoticSystemKey/sketches/B1fxc_4K2

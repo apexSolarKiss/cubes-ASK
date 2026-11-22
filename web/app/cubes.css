@@ -1,0 +1,15 @@
+/* cubes.css // the cubes page's own additions. Loads after instrument.css. */
+/* A phone in full window has room for one short row: play, save, controls, exit.
+   The save button's accessible name stays "save PNG" (aria-label). */
+.cubes-short { display: none; }
+@media (max-width: 699px) {
+  .inst[data-expanded="true"] .cubes-long { display: none; }
+  .inst[data-expanded="true"] .cubes-short { display: inline; }
+}
+/* A full picture on a phone in full window: play cannot start it, and the status line is hidden there,
+   so clear takes play's place. */
+@media (max-width: 699px) {
+  .inst[data-expanded="true"][data-full="true"] #play { display: none; }
+  .inst[data-expanded="true"][data-full="true"] #clear.inst-wide-only { display: inline-flex !important; }
+}
+.cubes-nowrap { white-space: nowrap; }
