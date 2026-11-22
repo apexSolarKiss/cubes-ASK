@@ -249,7 +249,31 @@
     return has(settings.base, settings.palette);
   }
 
+  /* Focus never stays on a button that has gone. On a phone in full window a button trades places
+     (cubes.css): clear for play while the picture is full, undo for save while a clear can be undone,
+     and focus moves to the one now in that place. Elsewhere, when undo goes, focus moves to clear.
+     A browser may drop focus as soon as a button is hidden, so the focused button is noted first. */
+  function focusedButton() {
+    var b = document.activeElement;
+    if (!b || ['play', 'clear', 'save', 'undo'].indexOf(b.id) < 0) return null;
+    return { id: b.id, undoInSavesPlace: b.id === 'undo' && !$('save').getClientRects().length };
+  }
+  function keepFocusVisible(was) {
+    if (!was) return;
+    var now = document.activeElement;
+    if (now && now !== document.body && now !== $(was.id)) return;
+    if ($(was.id).getClientRects().length) return;
+    var next = { play: ['clear'], clear: ['play'], save: ['undo'],
+      undo: was.undoInSavesPlace ? ['save', 'clear', 'play'] : ['clear', 'save', 'play'] }[was.id];
+    next.some(function (id) {
+      if (!$(id).getClientRects().length) return false;
+      $(id).focus();
+      return true;
+    });
+  }
+
   function syncControls() {
+    var focused = focusedButton();
     var data = engine.palettes;
     host.setAttribute('data-mode', settings.mode);
     canvas.setAttribute('data-draw', settings.mode === 'pointer' ? 'true' : 'false');
@@ -289,9 +313,8 @@
     $('play').disabled = !!loadError;
     $('undo').hidden = undoStack.length === 0;
     host.setAttribute('data-full', engine.full ? 'true' : 'false');
-    /* On a phone in full window a full picture shows clear in play's place: keep focus on a visible control. */
-    if (document.activeElement === $('play') && !$('play').getClientRects().length) $('clear').focus();
-    if (document.activeElement === $('clear') && !$('clear').getClientRects().length) $('play').focus();
+    host.setAttribute('data-undo', undoStack.length ? 'true' : 'false');
+    keepFocusVisible(focused);
 
     setText($('settings-line'),
       'main colors ' + main + '% each // darker ' + dark + '% each' +
@@ -348,7 +371,6 @@
   function endUndo() {
     undoStack = [];
     window.clearTimeout(undoTimer);
-    if (document.activeElement === $('undo')) $('clear').focus();
     syncControls();
   }
   $('clear').addEventListener('click', function () {
@@ -373,10 +395,7 @@
       heldByCap = entry.heldByCap || playing;
       setPlaying(false, true);
     }
-    if (undoStack.length === 0) {
-      window.clearTimeout(undoTimer);
-      if (document.activeElement === $('undo')) $('clear').focus();
-    }
+    if (undoStack.length === 0) window.clearTimeout(undoTimer);
     syncControls();
     say('restored', 'Restored.', 3000);
   });

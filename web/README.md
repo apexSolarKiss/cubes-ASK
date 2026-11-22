@@ -44,7 +44,7 @@ The link-preview card, `og-image.jpg`, is cut from the repository's header image
 - **mode**: `full field` makes cubes across the whole frame; `around pointer` makes them near the pointer.
 - **colors**: `muted purple`, `ASK emphasis`, `rainbow` and `red/pink/cyan`. In the three mixed palettes, **muted purple base** sets how often a new cube takes a base color: 80% to start in `ASK emphasis` and `red/pink/cyan`, 50% in `rainbow`. Each palette keeps its own setting. A change affects new cubes only, so the picture mixes until you clear it.
 - **frame**: `free` is the shape on screen; `square`, `4:3` and `widescreen` are fixed. **save PNG** saves the picture at the frame's size: `square` 2160 × 2160, `4:3` 2880 × 2160, `widescreen` 3840 × 2160, and `free` the shape on screen at 2160 on its short side, with the long side capped at 3840. A small window still saves 3840 × 2160 in `widescreen`.
-- **full window** and **fullscreen** give the canvas the window or the screen, with one row of actions under it. Where the browser refuses fullscreen, the page falls back to full window. Esc leaves full window. On a phone the row is `play`, `save` (the same `save PNG`), `controls` and `exit`.
+- **full window** and **fullscreen** give the canvas the window or the screen, with one row of actions under it. Where the browser refuses fullscreen, the page falls back to full window. Esc leaves full window. On a phone the row is `play`, `save` (the same `save PNG`), `controls` and `exit`; for the 8 seconds a clear can be undone, `undo` takes the place of `save`, which comes back when `undo` goes.
 - **tuning** holds the rate, the pointer spread, the share of each darker purple, the red + orange opacity floor and the edge weight, with **reset values**. Each affects new cubes only, except edge weight, which draws every cube again. The **settings** line lists the values in force and the seed.
 - **clear** can be undone for 8 seconds. Clearing twice does not lose the first picture: each undo takes back one clear, newest first.
 
@@ -91,7 +91,7 @@ Kept: the lattice and its spacing, the five cube sizes, the translucent fill wit
 
 - **Checked in headless Chrome only**, outside this repo. Real browser fullscreen (headless Chrome refuses it), Safari, Firefox, a hardware-accelerated canvas and physical phones and tablets are untested.
 - **Drawing a full picture again takes about a second** in headless Chrome with software rendering: about 0.9 s at 1932 × 1582 and 1.2 s at 3840 × 2160 for 30,000 cubes. Resizing waits until the size settles when a redraw is slow, and `save PNG` shows its busy state first. A hardware-accelerated browser was not measured.
-- **On a 320 px wide phone in full window** the action row runs about 9 px past the screen's edge. It fits at 360 px and wider.
+- **The full-window action row is checked at 320, 360, 390 and 430 px wide.** Below 360 px it keeps one line with tighter spacing. Narrower screens are not checked.
 - **No keyboard placement in `around pointer`.** `full field` covers keyboard-only use.
 - **Nothing is saved between visits except settings.** The mode, palette, sliders and frame are remembered in the browser's local storage under `cubes-ASK` and `cubes-ASK/frame`. The picture itself is gone on reload.
 
