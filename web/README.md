@@ -6,7 +6,9 @@ The Python sketches ([`isometric_cubes_v1.py`](../isometric_cubes_v1.py), [`isom
 
 ## Open it
 
-Serve this folder. The page reads its colors from `art-palettes.json` with `fetch`, which a page opened from a file cannot do. From this folder:
+Its public address is [cubes.A-S-K.studio](https://cubes.a-s-k.studio/), served from this folder.
+
+Locally, serve this folder. The page reads its colors from `art-palettes.json` with `fetch`, which a page opened from a file cannot do. From this folder:
 
 ```bash
 python3 -m http.server 8765

@@ -6,9 +6,11 @@ Formerly `isometric-cubes-ASK`. The repository was renamed in place on 2026-11-2
 
 ---
 
-## Web instrument
+## Live isometric cubes
 
-[`web/`](web/) holds cubes-ASK as a browser instrument: `full field` and `around pointer` in one instrument, in the four artwork palettes and on the instrument pattern of [design-system-ASK](https://github.com/apexSolarKiss/design-system-ASK), with full window, fullscreen, fixed frames and PNG saves at exact sizes. Serve the folder and open `index.html`; there is no build step.
+[cubes.A-S-K.studio](https://cubes.a-s-k.studio/)
+
+`full field` and `around pointer` in one instrument, in the four artwork palettes and on the instrument pattern of [design-system-ASK](https://github.com/apexSolarKiss/design-system-ASK), with full window, fullscreen, fixed frames and PNG saves at exact sizes. It is served from [`web/`](web/); there is no build step.
 
 It keeps the sketches' lattice, cube sizes and cube geometry, and adds four palettes, an exact saved size for each frame, and a picture that is full at 30,000 cubes. See [`web/README.md`](web/README.md). The py5 sketches below stay as they are.
 
