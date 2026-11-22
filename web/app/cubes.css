@@ -6,14 +6,15 @@
   .inst[data-expanded="true"] .cubes-long { display: none; }
   .inst[data-expanded="true"] .cubes-short { display: inline; }
 }
-/* There the status line, clear and undo are hidden, so a button trades places instead, at the same width:
-   while the picture is full, play cannot start it, and clear takes play's place;
-   while a clear can be undone, undo takes save's place, and save comes back when undo goes. */
+/* There the status line, clear and undo are hidden. So while the picture is full, play cannot start it,
+   and clear takes play's place. While a clear can be undone, undo shows beside save, and to make room
+   controls shows only its indicator (its name stays "controls", from aria-label). */
 @media (max-width: 699px) {
   .inst[data-expanded="true"][data-full="true"] #play { display: none; }
   .inst[data-expanded="true"][data-full="true"] #clear.inst-wide-only { display: inline-flex !important; }
-  .inst[data-expanded="true"][data-undo="true"] #save { display: none; }
   .inst[data-expanded="true"][data-undo="true"] #undo.inst-wide-only { display: inline-flex !important; }
+  .inst[data-expanded="true"][data-undo="true"] #panel-toggle .surface-disclosure-label { display: none; }
+  .inst[data-expanded="true"][data-undo="true"] #panel-toggle { min-width: 44px; justify-content: center; }
 }
 /* Below 360 px the same row keeps to one line with tighter spacing. */
 @media (max-width: 359px) {

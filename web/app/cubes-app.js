@@ -249,23 +249,22 @@
     return has(settings.base, settings.palette);
   }
 
-  /* Focus never stays on a button that has gone. On a phone in full window a button trades places
-     (cubes.css): clear for play while the picture is full, undo for save while a clear can be undone,
-     and focus moves to the one now in that place. Elsewhere, when undo goes, focus moves to clear.
-     A browser may drop focus as soon as a button is hidden, so the focused button is noted first. */
+  /* When a sync hides the focused play, clear or undo, focus moves to the first of its stand-ins
+     still shown. On a phone in full window clear takes play's place while the picture is full
+     (cubes.css), so those two stand in for each other; when undo goes, focus moves to clear, or to
+     save where clear is hidden. A browser may drop focus as soon as a button is hidden, so the
+     focused button is noted first. A resize that hides a button does not run this. */
+  var STAND_INS = { play: ['clear'], clear: ['play'], undo: ['clear', 'save', 'play'] };
   function focusedButton() {
     var b = document.activeElement;
-    if (!b || ['play', 'clear', 'save', 'undo'].indexOf(b.id) < 0) return null;
-    return { id: b.id, undoInSavesPlace: b.id === 'undo' && !$('save').getClientRects().length };
+    return b && has(STAND_INS, b.id) ? b.id : null;
   }
   function keepFocusVisible(was) {
     if (!was) return;
     var now = document.activeElement;
-    if (now && now !== document.body && now !== $(was.id)) return;
-    if ($(was.id).getClientRects().length) return;
-    var next = { play: ['clear'], clear: ['play'], save: ['undo'],
-      undo: was.undoInSavesPlace ? ['save', 'clear', 'play'] : ['clear', 'save', 'play'] }[was.id];
-    next.some(function (id) {
+    if (now && now !== document.body && now !== $(was)) return;
+    if ($(was).getClientRects().length) return;
+    STAND_INS[was].some(function (id) {
       if (!$(id).getClientRects().length) return false;
       $(id).focus();
       return true;
