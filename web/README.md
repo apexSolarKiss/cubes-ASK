@@ -91,9 +91,11 @@ Kept: the lattice and its spacing, the five cube sizes, the translucent fill wit
 
 ## Known limits
 
-- **Checked in headless Chrome only**, outside this repo. Real browser fullscreen (headless Chrome refuses it), Safari, Firefox, a hardware-accelerated canvas and physical phones and tablets are untested.
-- **Drawing a full picture again takes about a second** in headless Chrome with software rendering: about 0.9 s at 1932 × 1582 and 1.2 s at 3840 × 2160 for 30,000 cubes. Resizing waits until the size settles when a redraw is slow, and `save PNG` shows its busy state first. A hardware-accelerated browser was not measured.
-- **The full-window action row is checked at 320, 360, 390 and 430 px wide.** Below 360 px it keeps one line with tighter spacing. Narrower screens are not checked.
+- **Checked in Chrome on a computer**, outside this repo: in headless Chrome, and in a signed-in desktop Chrome on the deployment before it was public.
+- **Checked on ASK's iPhone on 2026-11-22**, on the live site. In Safari: startup in the default palette, placing cubes with a finger in `around pointer` without the page scrolling, the full-window row and the `controls` panel, rotating the phone, `save PNG` to Files, and a full picture followed by `clear` and `undo` in full window. In Chrome on the same iPhone the same steps worked, with one difference in saving: `save PNG` made the file, and it could be shared with AirDrop, but in this check Chrome's "Open in Downloads" did not show it. Saving it from the iPhone's share sheet, through "View More", then "Save to Files" and a folder, worked.
+- **Untested:** real browser fullscreen (headless Chrome refuses it, and the iPhone checks above are of full window), Safari on a computer, Firefox, other phones, and tablets.
+- **Drawing a full picture again takes about a second** in headless Chrome with software rendering: about 0.9 s at 1932 × 1582 and 1.2 s at 3840 × 2160 for 30,000 cubes. Resizing waits until the size settles when a redraw is slow, and `save PNG` shows its busy state first. A hardware-accelerated browser was not measured, and on the iPhone neither drawing nor saving was timed.
+- **The full-window action row is checked in headless Chrome at 320, 360, 390 and 430 px wide.** Below 360 px it keeps one line with tighter spacing. Narrower screens are not checked.
 - **No keyboard placement in `around pointer`.** `full field` covers keyboard-only use.
 - **Nothing is saved between visits except settings.** The mode, palette, sliders and frame are remembered in the browser's local storage under `cubes-ASK` and `cubes-ASK/frame`. The picture itself is gone on reload.
 
